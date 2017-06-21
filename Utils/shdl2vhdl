@@ -1,2 +1,0 @@
-#!/bin/sh
-exec java -jar SHDL2VHDL/shdl2vhdl2.1.10.jar
