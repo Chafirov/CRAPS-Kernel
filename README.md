@@ -1,11 +1,15 @@
 # CRAPS Kernel
 
-This repository holds the code for a CPU and OS kernel for a Nexys2 board.
+This repository holds the code for a CPU and OS kernel for a Nexys4 board.
+This project extends a the original one with adding :
+- A compatibility to the Nexys4 board
+- The possibility to use the rj45 port of the Nexys4 board for Ethernet
+communications
 
 ## What is it?
 
 This actually is several projects:
-- a CPU (called CRAPS), written in SHDL and VHDL;
+- a CPU (called CRAPS), written in VHDL;
 - a OS kernel that runs on it, written in a C subset;
 - a compiler to compile the C subset to CRAPS assembly;
 - a monitor/debugger for the CRAPS processor;
@@ -23,10 +27,8 @@ session.
 ### The processor
 The processor is a CRAPS processor, a RISC processor.
 
-The [processor](Processor/shdl/) is written in SHDL (Simple Hardware
-Description Language). SHDL is then compiled to VHDL with
-[`shdl2vhdl`](Utils/shdl2vhdl). It will generate and synthesize a Xilinx ISE
-project. You can then use Digilent Adept or Xilinx ISE to program the FPGA.
+The [processor](Processor/ISE_project/) is written in VHDL.
+ You can then use Digilent Adept or Xilinx ISE to program the FPGA.
 
 The processor runs CRAPS assembly. You can use [`crapsc`](Utils/crapsc) to
 compile CRAPS assembly to CRAPS bytecode.
