@@ -3,11 +3,11 @@ package org.mmek.craps.crapsusb;
 
 public class Device {
     private String alias;
-    private Long handle;
+    private int fd;
 
     public Device(String alias) {
         this.alias = alias;
-        handle = null;
+        fd = -1;
     }
 
     public String getAlias() {
@@ -15,35 +15,35 @@ public class Device {
     }
 
     public synchronized void open() throws ConnectionFailedException {
-        assert handle == null;
-        handle = CommThread.openData(alias);
+        assert fd == -1;
+        fd = CommThread.openData(alias);
 
-        if(handle == -1) {
+        if(fd == -1) {
             throw new ConnectionFailedException();
         }
     }
 
     public synchronized void close() throws ConnectionFailedException {
-        assert handle != null;
+        assert fd != -1;
 
-        if(CommThread.closeData(handle) == -1) {
+        if(CommThread.closeData(fd) == -1) {
             throw new ConnectionFailedException();
         }
 
-        handle = null;
+        fd = -1;
     }
 
     public synchronized int writeByte(int num, int data) {
-        assert handle != null;
-        return CommThread.writeByte(handle, num, data);
+        assert fd != -1;
+        return CommThread.writeByte(fd, num, data);
     }
 
     public synchronized int readByte(int num) {
-        assert handle != null;
-        return CommThread.readByte(handle, num);
+        assert fd != -1;
+        return CommThread.readByte(fd, num);
     }
 
     public boolean isOpened() {
-        return handle != null;
+        return fd != -1;
     }
 }

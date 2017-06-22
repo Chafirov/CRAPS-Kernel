@@ -1,5 +1,6 @@
 package org.mmek.craps.crapsusb;
 
+import java.lang.System;
 import java.io.*;
 import java.util.*;
 
@@ -13,10 +14,10 @@ public class CommThread implements Runnable {
      */
     public native static int init();
     public native static List<String> getDeviceAliases();
-    public native static long openData(String alias);
-    public native static int closeData(long handle);
-    public synchronized native static int writeByte(long handle, int num, int data);
-    public synchronized native static int readByte(long handle, int num);
+    public native static int openData(String alias);
+    public native static int closeData(int fd);
+    public synchronized native static int writeByte(int fd, int num, int data);
+    public synchronized native static int readByte(int fd, int num);
 
     /**
      * Return all available devices
@@ -26,12 +27,7 @@ public class CommThread implements Runnable {
         List<Device> devices = new ArrayList<>();
 
         for(String alias : aliases) {
-            long handle = CommThread.openData(alias);
-
-            if(handle > 0) {
-                CommThread.closeData(handle);
-                devices.add(new Device(alias));
-            }
+            devices.add(new Device(alias));
         }
 
         return devices;
@@ -146,6 +142,7 @@ public class CommThread implements Runnable {
     public synchronized void sendByte(int num, int data) throws CommException {
         int attempt = 0;
         int err;
+
 
         do {
             err = device.writeByte(num, data);

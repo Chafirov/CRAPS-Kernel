@@ -98,7 +98,7 @@ abstract public class CrapsDB {
 
             // load object file
             if(objFile != null) {
-                System.out.print("Loading file " + objFile.getPath() + " ... ");
+                System.out.println("Loading file " + objFile.getPath() + " ... ");
                 objModule = ObjModule.load(objFile);
                 api.loadObj(objModule);
                 System.out.println("done.");

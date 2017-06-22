@@ -1,5 +1,6 @@
 package org.mmek.craps.crapsusb;
 
+import java.lang.System;
 import java.io.*;
 import java.util.*;
 
@@ -168,6 +169,7 @@ public class CrapsApi {
         outs[59] = 1; // mon_req = 1
         commThread.sendByte(7, getByte(7));
 
+	System.out.println("Waiting for first ack");
         // wait for mon_ack = 1
         do {} while ((commThread.readByte(7) & 128) == 0);
 
@@ -180,6 +182,7 @@ public class CrapsApi {
         outs[59] = 0; // mon_req = 0
         commThread.sendByte(7, getByte(7));
 
+	System.out.println("Waiting for second ack");
         // wait for mon_ack = 0
         do {} while ((commThread.readByte(7) & 128) != 0);
     }
@@ -189,6 +192,7 @@ public class CrapsApi {
         Map.Entry<Long, ObjEntry>[] newEntries = objModule.getEntrySet().toArray(new Map.Entry[0]);
 
         for (int i = 0; i < newEntries.length; i++) {
+            System.out.println("Writing word number : " + i +"/" + newEntries.length);
             int addr = newKeys[i].intValue();
             ObjEntry oe = objModule.get(addr);
             long val = Long.parseLong(oe.word, 2);
@@ -234,6 +238,10 @@ public class CrapsApi {
                 int[] bitVector = ev.getBitVector();
                 int brk = bitVector[62];
                 int rst = bitVector[61];
+		System.out.println("");
+		for (int iBit = 0; iBit < 64; iBit ++)
+			System.out.print(bitVector[iBit]);
+		System.out.println("");
 
                 if(brk == 1 && running) {
                     try {

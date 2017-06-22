@@ -7,6 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef org_mmek_craps_crapsusb_CommThread_N
+#define org_mmek_craps_crapsusb_CommThread_N 128L
+#undef org_mmek_craps_crapsusb_CommThread_IDLE_TIME
+#define org_mmek_craps_crapsusb_CommThread_IDLE_TIME 10LL
 /*
  * Class:     org_mmek_craps_crapsusb_CommThread
  * Method:    init
@@ -26,34 +30,34 @@ JNIEXPORT jobject JNICALL Java_org_mmek_craps_crapsusb_CommThread_getDeviceAlias
 /*
  * Class:     org_mmek_craps_crapsusb_CommThread
  * Method:    openData
- * Signature: (Ljava/lang/String;)J
+ * Signature: (Ljava/lang/String;)I
  */
-JNIEXPORT jlong JNICALL Java_org_mmek_craps_crapsusb_CommThread_openData
+JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_openData
   (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     org_mmek_craps_crapsusb_CommThread
  * Method:    closeData
- * Signature: (J)I
+ * Signature: (I)I
  */
 JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_closeData
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jint);
 
 /*
  * Class:     org_mmek_craps_crapsusb_CommThread
  * Method:    writeByte
- * Signature: (JII)I
+ * Signature: (III)I
  */
 JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_writeByte
-  (JNIEnv *, jclass, jlong, jint, jint);
+  (JNIEnv *, jclass, jint, jint, jint);
 
 /*
  * Class:     org_mmek_craps_crapsusb_CommThread
  * Method:    readByte
- * Signature: (JI)I
+ * Signature: (II)I
  */
 JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv *, jclass, jint, jint);
 
 #ifdef __cplusplus
 }
