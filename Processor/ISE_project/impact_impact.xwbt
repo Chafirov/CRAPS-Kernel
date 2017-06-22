@@ -1,8 +1,0 @@
-INTSTYLE=impact
-INFILE=/home/local/CRAPS/impact.xsl
-OUTFILE=/home/local/CRAPS/impact.xsl
-FAMILY=Single
-PART=Single
-WORKINGDIR=/home/local/CRAPS
-LICENSE=iMPACT
-USER_INFO=iMPACT

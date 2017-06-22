@@ -1,7 +1,0 @@
-Storage Target: SPI Flash Single FPGA
-Auto Select Storage Device
-FF
-Craps
-/home/local/CRAPS/
-
-MCS
