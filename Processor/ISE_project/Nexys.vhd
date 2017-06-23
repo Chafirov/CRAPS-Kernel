@@ -183,7 +183,7 @@ end component;
 	signal ssgclk : std_logic ;
 	signal pwmclk : std_logic ;
 	signal xpc2board : std_logic_vector (127 downto 0) ;
-	signal board2pc : std_logic_vector (127 downto 0);
+	signal board2pc : std_logic_vector (127 downto 0) := (others => '0');
 	signal pc2board : std_logic_vector (127 downto 0) ;
 	signal mon_cmd : std_logic_vector (3 downto 0) ;
 	signal mon_req : std_logic ;

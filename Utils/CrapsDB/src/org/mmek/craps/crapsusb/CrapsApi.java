@@ -238,10 +238,6 @@ public class CrapsApi {
                 int[] bitVector = ev.getBitVector();
                 int brk = bitVector[62];
                 int rst = bitVector[61];
-		System.out.println("");
-		for (int iBit = 0; iBit < 64; iBit ++)
-			System.out.print(bitVector[iBit]);
-		System.out.println("");
 
                 if(brk == 1 && running) {
                     try {

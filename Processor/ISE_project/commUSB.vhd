@@ -71,14 +71,14 @@ begin
 		board2pc(55 downto 48) when regAddr = "00110" else
 		board2pc(63 downto 56) when regAddr = "00111" else
 	---------- Others are used for control ------------------------------
-		board2pc(7 downto 0) when regAddr = "01000" else
-		board2pc(15 downto 8) when regAddr = "01001" else
-		board2pc(23 downto 16) when regAddr = "01010" else
-		board2pc(31 downto 24) when regAddr = "01011" else
-		board2pc(39 downto 32) when regAddr = "01100" else
-		board2pc(47 downto 40) when regAddr = "01101" else
-		board2pc(55 downto 48) when regAddr = "01110" else
-		board2pc(63 downto 56) when regAddr = "01111" else
+		board2pc(71 downto 64) when regAddr = "01000" else
+		board2pc(79 downto 72) when regAddr = "01001" else
+		board2pc(87 downto 80) when regAddr = "01010" else
+		board2pc(95 downto 88) when regAddr = "01011" else
+		board2pc(103 downto 96) when regAddr = "01100" else
+		board2pc(111 downto 104) when regAddr = "01101" else
+		board2pc(119 downto 112) when regAddr = "01110" else
+		board2pc(127 downto 120) when regAddr = "01111" else
 		ctrl;
 
 	process (UARTClk, reset) --Receive (control and data)

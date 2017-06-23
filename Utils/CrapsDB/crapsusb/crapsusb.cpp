@@ -17,6 +17,8 @@
 #define ONE_MS 1000 // one milisecond in microsecond
 #define DELAY 10*ONE_MS
 
+#define DEBUG
+
 #ifdef DEBUG
     #include <stdio.h>
 #endif
@@ -157,21 +159,26 @@ void resend(int fd){
 	#ifdef DEBUG
 	printf("------Resend--------\n");
 	#endif
-	for (int iByte = 0; iByte < 6; iByte++){
-		writeByteC(sendedBytes[2*iByte], sendedBytes[2*iByte+1], fd);
-	}
+	int ack = 0;
+
+	do {
+		for (int iByte = 0; iByte < 6; iByte++){
+			secureWrite(fd, sendedBytes[2*iByte]);     // the addresse byte
+			secureWrite(fd, sendedBytes[2*iByte + 1]); // the data byte
+		}
+		usleep(ONE_MS); // Waiting for ack
+	} while (read(fd, &ack, 1) != 1 && ack != 255); // 6 bytes were emitted, so we are looking at the ack.
 	#ifdef DEBUG
 	printf("------End Resend----\n");
 	#endif 
 }
 
 void writeByteC(unsigned char addr, unsigned char byte, int fd){
+    pthread_mutex_lock(&mutex);
     addr &= 0x0F;
 
-    pthread_mutex_lock(&mutex);
     secureWrite((int)fd, addr);
     secureWrite((int)fd, byte);
-    pthread_mutex_unlock(&mutex);
 
 	#ifdef DEBUG
     	printf("%i wrote at addr %i\n", byte, addr);
@@ -199,7 +206,7 @@ void writeByteC(unsigned char addr, unsigned char byte, int fd){
 		#endif
 		cmpt_frame = 0;
 	}
-
+	pthread_mutex_unlock(&mutex);
 }
 
 /*
@@ -218,7 +225,8 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_writeByte(JNIEnv 
  * Signature: (JI)I
  */
 JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte(JNIEnv *, jclass, jint fd, jint num) {
-    unsigned char addr = (unsigned char)num; // because lsb have to be on the left
+	pthread_mutex_lock(&mutex);
+	unsigned char addr = (unsigned char)num; // because lsb have to be on the left
     unsigned char data;
     int nbRead = 0;
 
@@ -227,7 +235,6 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte(JNIEnv *
     addr |= (1 << 4); // tell the board we want to read
 
     while (nbRead != 1){
-        pthread_mutex_lock(&mutex);
         secureWrite((int)fd, addr);
    
         #ifdef DEBUG
@@ -235,8 +242,7 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte(JNIEnv *
         #endif
  
         //read data from the board
-        nbRead = read((int)fd, &data, 1); 
-        pthread_mutex_unlock(&mutex);
+        nbRead = read((int)fd, &data, 1);
     }
    
     int idata = reverse(data);
@@ -245,5 +251,6 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte(JNIEnv *
     printf("Read %i at addr %i\n", idata, (unsigned char) num);
 #endif
  
+	pthread_mutex_unlock(&mutex);
     return ((jint) idata);
 }

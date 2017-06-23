@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
 
 #define DEBUG
 
@@ -12,6 +13,7 @@
 #define ONE_MS 1000 // one ms in us
 #define DELAY 1*ONE_MS
 
+pthread_mutex_t mutex;
 int cmpt_frame = 0;
 unsigned char sendedBytes[2*6];
 
@@ -89,22 +91,36 @@ void secureWrite(int fd, unsigned char byte){
 	write(fd, &reversedByte, 1);
 }
 
+/*
+ * This function resend the 12 last bytes emitted.
+ * 12 bytes = 6 addresse's bytes and their corresponding data's bytes.
+ */
 void resend(int fd){
 	#ifdef DEBUG
 	printf("------Resend--------\n");
 	#endif
-	for (int iByte = 0; iByte < 6; iByte++){
-		writeByte(sendedBytes[2*iByte + 1], sendedBytes[2*iByte+1], fd);
-	}
+	int ack = 0;
+
+	do {
+		for (int iByte = 0; iByte < 6; iByte++){
+			secureWrite(fd, sendedBytes[2*iByte]);     // the addresse byte
+			secureWrite(fd, sendedBytes[2*iByte + 1]); // the data byte
+		}
+		usleep(ONE_MS); // Waiting for ack
+	} while (read(fd, &ack, 1) != 1 && ack != 255); // 6 bytes were emitted, so we are looking at the ack.
 	#ifdef DEBUG
 	printf("------End Resend----\n"); 
 	#endif
 }
-// /!\ LSB ARE AT THE LEFT !
 
-// send a byte to the board
+/*
+ * Send a byte of data to the board at the given addresse
+ * To do that : a first byte is sent with the addresse and a polling bit (=0)
+ * 		then the byte of data is sent.
+ */ 
 void writeByte(unsigned char addr, unsigned char byte, int fd){
 
+	pthread_mutex_lock(&mutex);
 	#ifdef DEBUG
 	printf("%i wrote at addr %i\n", byte, addr);
 	#endif
@@ -112,9 +128,9 @@ void writeByte(unsigned char addr, unsigned char byte, int fd){
 	addr &= 0x0F;
 
 	secureWrite(fd, addr);
-	usleep(DELAY);
+	usleep(ONE_MS);
 	secureWrite(fd, byte);
-	usleep(DELAY);
+	usleep(ONE_MS);
 
 	sendedBytes[2*cmpt_frame] = addr;
 	sendedBytes[2*cmpt_frame + 1] = byte;
@@ -138,9 +154,17 @@ void writeByte(unsigned char addr, unsigned char byte, int fd){
 		#endif
 		cmpt_frame = 0;
 	}
+	pthread_mutex_unlock(&mutex);
 }
 
+/*
+ * Read a byte a the given addresse
+ * To do this : a first byte is sent with the adresse and a polling bit (=1)
+ *		then it wait for the byte of data.
+ *		If nothing is received, the control byte is re-sent.
+ */
 unsigned char readByte(unsigned char addr, int fd){
+	pthread_mutex_lock(&mutex);
 	unsigned char data;	
 	int nbRead = 0;
 
@@ -164,6 +188,7 @@ unsigned char readByte(unsigned char addr, int fd){
 	printf("%i read at addr %i\n", reverse(data), addr &= 0x0F);
 	#endif
 
+	pthread_mutex_unlock(&mutex);
 	return reverse(data);
 }
 

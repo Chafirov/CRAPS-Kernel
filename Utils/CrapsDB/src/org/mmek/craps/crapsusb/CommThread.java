@@ -121,6 +121,7 @@ public class CommThread implements Runnable {
                 }
                 else {
                     if ((System.currentTimeMillis() - lastChangeTime) > 1000) {
+			System.out.println("Slow read");
                         idleTime = IDLE_TIME; // no update since 1s, slow read
                     }
                 }
