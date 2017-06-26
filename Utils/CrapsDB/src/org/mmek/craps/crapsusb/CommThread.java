@@ -88,7 +88,7 @@ public class CommThread implements Runnable {
 
     public void run() {
         try {
-            // on fait varier byteNum circulairement de 0 à 7
+            // on fait varier byteNum circulairement de 0 à 16
             int byteNum = 0;
             int bytes[] = new int[N/8];
             long lastChangeTime = 0;
@@ -121,7 +121,6 @@ public class CommThread implements Runnable {
                 }
                 else {
                     if ((System.currentTimeMillis() - lastChangeTime) > 1000) {
-			System.out.println("Slow read");
                         idleTime = IDLE_TIME; // no update since 1s, slow read
                     }
                 }
@@ -143,7 +142,6 @@ public class CommThread implements Runnable {
     public synchronized void sendByte(int num, int data) throws CommException {
         int attempt = 0;
         int err;
-
 
         do {
             err = device.writeByte(num, data);

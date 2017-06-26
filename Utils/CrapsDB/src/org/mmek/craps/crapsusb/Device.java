@@ -1,6 +1,5 @@
 package org.mmek.craps.crapsusb;
 
-
 public class Device {
     private String alias;
     private int fd;

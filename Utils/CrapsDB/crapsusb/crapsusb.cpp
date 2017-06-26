@@ -17,8 +17,6 @@
 #define ONE_MS 1000 // one milisecond in microsecond
 #define DELAY 10*ONE_MS
 
-#define DEBUG
-
 #ifdef DEBUG
     #include <stdio.h>
 #endif

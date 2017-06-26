@@ -78,17 +78,18 @@ public class CrapsApi {
     }
 
     public synchronized long readRegister(int numreg) throws CommException {
-        setBits(60, 63, 1); // mon_cmd = "0001" (read register)
-        commThread.sendByte(7, getByte(7));
+	do {
+		setBits(60, 63, 1); // mon_cmd = "0001" (read register)
+		commThread.sendByte(7, getByte(7));
 
-        setBits(0, 4, numreg);
-        commThread.sendByte(0, getByte(0));
+		setBits(0, 4, numreg);
+		commThread.sendByte(0, getByte(0));
 
-        outs[59] = 1; // mon_req = 1
-        commThread.sendByte(7, getByte(7));
+		outs[59] = 1; // mon_req = 1
+		commThread.sendByte(7, getByte(7));
 
         // wait for mon_ack = 1
-        do {} while ((commThread.readByte(7) & 128) == 0);
+        } while ((commThread.readByte(7) & 128) == 0);
 
         // get read data
         long value = 0;
@@ -106,42 +107,44 @@ public class CrapsApi {
     }
 
     public synchronized void writeRegister(int numreg, long val) throws CommException {
-        setBits(60, 63, 3); // mon_cmd = "0011" (write register)
-        commThread.sendByte(7, getByte(7));
+	do {
+		setBits(60, 63, 3); // mon_cmd = "0011" (write register)
+		commThread.sendByte(7, getByte(7));
 
-        setBits(32, 36, numreg);
-        commThread.sendByte(4, getByte(4));
+		setBits(32, 36, numreg);
+		commThread.sendByte(4, getByte(4));
 
-        // value to write on pc2board[31..0]
-        setBits(0, 31, val);
-        for (int i = 0; i < 4; i++) {
-            commThread.sendByte(i, getByte(i));
-        }
+		// value to write on pc2board[31..0]
+		setBits(0, 31, val);
+		for (int i = 0; i < 4; i++) {
+		    commThread.sendByte(i, getByte(i));
+		}
 
-        outs[59] = 1; // mon_req = 1
-        commThread.sendByte(7, getByte(7));
+		outs[59] = 1; // mon_req = 1
+		commThread.sendByte(7, getByte(7));
 
         // wait for mon_ack = 1
-        do {} while ((commThread.readByte(7) & 128) == 0);
+        } while ((commThread.readByte(7) & 128) == 0);
 
         outs[59] = 0; // mon_req = 0
         commThread.sendByte(7, getByte(7));
     }
 
     public synchronized long readMemory(long addr) throws CommException {
-        setBits(60, 63, 0); // mon_cmd = "0000" (read memory)
-        // address on pc2board[31..0]
-        setBits(0, 31, addr);
+	do {
+		setBits(60, 63, 0); // mon_cmd = "0000" (read memory)
+		// address on pc2board[31..0]
+		setBits(0, 31, addr);
 
-        for (int i = 0; i < 4; i++) {
-            commThread.sendByte(i, getByte(i));
-        }
+		for (int i = 0; i < 4; i++) {
+		    commThread.sendByte(i, getByte(i));
+		}
 
-        outs[59] = 1; // mon_req = 1
-        commThread.sendByte(7, getByte(7));
+		outs[59] = 1; // mon_req = 1
+		commThread.sendByte(7, getByte(7));
 
         // wait for mon_ack = 1
-        do {} while ((commThread.readByte(7) & 128) == 0);
+        } while ((commThread.readByte(7) & 128) == 0);
 
         // get read data
         long value = 0;
@@ -159,20 +162,24 @@ public class CrapsApi {
     }
 
     public synchronized void writeMemory(long addr, long val) throws CommException {
-        setBits(60, 63, 2); // mon_cmd = "0010" (write memory)
-        // address on pc2board[31..0]
-        setBits(0, 31, addr);
-        for (int i = 0; i < 4; i++) {
-            commThread.sendByte(i, getByte(i));
-        }
+	do {
+		setBits(60, 63, 2); // mon_cmd = "0010" (write memory)
+		// address on pc2board[31..0]
+		setBits(0, 31, addr);
+		for (int i = 0; i < 4; i++) {
+		    commThread.sendByte(i, getByte(i));
+		}
 
-        outs[59] = 1; // mon_req = 1
-        commThread.sendByte(7, getByte(7));
+		outs[59] = 1; // mon_req = 1
+		commThread.sendByte(7, getByte(7));
 
-	System.out.println("Waiting for first ack");
+		System.out.println("Waiting for first ack");
+
+		sleep(3);
         // wait for mon_ack = 1
-        do {} while ((commThread.readByte(7) & 128) == 0);
+        } while ((commThread.readByte(7) & 128) == 0);
 
+	do {
         // value to write on pc2board[31..0]
         setBits(0, 31, val);
         for (int i = 0; i < 4; i++) {
@@ -183,8 +190,10 @@ public class CrapsApi {
         commThread.sendByte(7, getByte(7));
 
 	System.out.println("Waiting for second ack");
+
+	sleep(3);
         // wait for mon_ack = 0
-        do {} while ((commThread.readByte(7) & 128) != 0);
+        } while ((commThread.readByte(7) & 128) != 0);
     }
 
     public void loadObj(ObjModule objModule) throws CommException {
