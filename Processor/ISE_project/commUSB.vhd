@@ -17,51 +17,42 @@ end commUSB ;
 
 architecture synthesis of commUSB is
 
-	component diviseurClk_UART port (
-		 clk, reset : in  std_logic;
-		 nclk       : out std_logic);
-	end component;
-
-	component UART port (
-		 clk, reset : in std_logic;
-		 cs, rd, wr : in std_logic;
-		 RxD        : in std_logic;
-		 TxD        : out std_logic;
-		 IntR       : out std_logic;        
-		 IntT       : out std_logic;         
-		 addr       : in std_logic_vector(1 downto 0);
-		 data_in    : out std_logic_vector(7 downto 0);
-		 data_out   : in std_logic_vector(7 downto 0));
-	end component;
-
-	component dec7seg port (
-		value : in std_logic_vector(3 downto 0);
-		seg : out std_logic_vector (6 downto 0)
-	);
+	component uart 
+	generic (
+        baud                : positive;
+        clock_frequency     : positive
+    );
+	port (
+        clock               :   in  std_logic;
+        reset               :   in  std_logic;    
+        data_stream_in      :   in  std_logic_vector(7 downto 0);
+        data_stream_in_stb  :   in  std_logic;
+        data_stream_in_ack  :   out std_logic;
+        data_stream_out     :   out std_logic_vector(7 downto 0);
+        data_stream_out_stb :   out std_logic;
+        tx                  :   out std_logic;
+        rx                  :   in  std_logic
+    );
 	end component;
 
 	type t_etat is (Idle, receiveByte, sendByte, endSending, receiveCtrl, readByte, send_ack);
 	signal state : t_etat;
 
 	signal regAddr : std_logic_vector(4 downto 0) := "00000";
-	signal cs, rd, wr : std_logic;
-	signal IntR, IntT : std_logic;
+	signal in_stb, out_stb, out_ack : std_logic;
 	signal addr : std_logic_vector(1 downto 0) := (others => '0');
-	signal UARTClk : std_logic;
 	signal db_in : std_logic_vector(7 downto 0);
 	signal db_out : std_logic_vector(7 downto 0);
 	signal pollingBit : std_logic;
-	signal value : std_logic_vector(3 downto 0);
 	signal ctrl : std_logic_vector(7 downto 0);
 	
 begin
 	
-	divClk : diviseurClk_UART port map (mclk, reset, UARTClk);
-	uart_unit : UART port map (UARTClk, reset, cs, rd, wr, rxd, txd, IntR, IntT, addr, db_in, db_out);
+	uart_unit : UART generic map (115200, 100000000)
+						  port map (mclk, not reset, db_out, out_stb, out_ack, db_in, in_stb, txd, rxd);
 
 	-- Decode the address register and select the appropriate data register
 	db_out <=
-	-------------- Use for data ----------------------------
 		board2pc(7 downto 0) when regAddr = "00000" else
 		board2pc(15 downto 8) when regAddr = "00001" else
 		board2pc(23 downto 16) when regAddr = "00010" else
@@ -70,7 +61,6 @@ begin
 		board2pc(47 downto 40) when regAddr = "00101" else
 		board2pc(55 downto 48) when regAddr = "00110" else
 		board2pc(63 downto 56) when regAddr = "00111" else
-	---------- Others are used for control ------------------------------
 		board2pc(71 downto 64) when regAddr = "01000" else
 		board2pc(79 downto 72) when regAddr = "01001" else
 		board2pc(87 downto 80) when regAddr = "01010" else
@@ -81,39 +71,32 @@ begin
 		board2pc(127 downto 120) when regAddr = "01111" else
 		ctrl;
 
-	process (UARTClk, reset) --Receive (control and data)
+	process (mclk, reset)
 		variable polling : std_logic;
 		variable cmpt_frame : natural range 0 to 7 := 0;
 	begin
 	
 		if reset = '0' then
 			state <= idle;
-			cs <= '1'; rd <= '1'; wr <= '1'; -- data read 
-			addr <= (others => '0');
 			regAddr <= "00000";
 			cmpt_frame := 0;
 			
-		elsif rising_edge(UARTClk) then
+		elsif rising_edge(mclk) then
 			case state is
 			
 				when Idle =>
-					cs <= '0'; rd <= '0'; wr <= '1'; -- UART's registers set to read data ...
-					addr <= "01"; -- ...on the control register
 					
-					if (IntR = '0') then -- New data received by UART
-						cs <= '0'; rd <= '0'; wr <= '1'; -- UART's registers set to read data ...
-						addr <= "00"; -- ...on the data bus
+					if (in_stb = '1') then -- New data received by UART
 						-- first data received = always regAddr
 						state <= receiveCtrl;
+						regAddr(4) <= '0';
+						regAddr(3 downto 0) <= db_in(3 downto 0);
+						polling := db_in(4); -- Should I send or receive
 						
 					end if;
 					
 				when receiveCtrl =>
-					regAddr(4) <= '0';
-					regAddr(3 downto 0) <= db_in(3 downto 0);
-					polling := db_in(4); -- Should I send or receive
-					if (IntR = '1') then
-						cs <= '1'; rd <= '1'; wr <= '1'; -- data read
+					if (in_stb = '0') then
 						if polling = '1' then
 							state <= sendByte;
 						else
@@ -121,20 +104,12 @@ begin
 						end if;
 					end if;
 					
-				when receiveByte =>					
-					cs <= '0'; rd <= '0'; wr <= '1'; -- UART's registers set to read data ...
-					addr <= "01"; -- ...on the control register
+				when receiveByte =>
 					
-					if IntR = '0' then
-						cs <= '0'; rd <= '0'; wr <= '1'; -- UART's registers set to read data...
-						addr <= "00"; -- ...on the data bus
+					if in_stb = '1' then
 						state <= readByte;
 						
-					end if;
-				
-				when readByte =>
-					
-					case regAddr(3 downto 0) is
+						case regAddr(3 downto 0) is
 							when "0000" => pc2board(7 downto 0) <= db_in;
 							when "0001" => pc2board(15 downto 8) <= db_in;
 							when "0010" => pc2board(23 downto 16) <= db_in;
@@ -153,9 +128,14 @@ begin
 							when "1111" => pc2board(127 downto 120) <= db_in;
 							when others => pc2board(7 downto 0) <= db_in;
 						end case;
-					if (IntR = '1') then
-						cs <= '1'; rd <= '1'; wr <= '1'; -- data read
+						
+					end if;
+				
+				when readByte =>
+					
+					if (in_stb = '0') then
 						cmpt_frame := cmpt_frame + 1;
+--						value <= std_logic_vector(to_unsigned(cmpt_frame, value'length));
 						if cmpt_frame < 6 then
 							state <= idle;
 						else
@@ -170,19 +150,14 @@ begin
 					state <= sendByte;
 				
 				when sendByte =>
-					-- to know if the UART is ready to send
-					-- the control register is tested
-					cs <= '0'; rd <= '0'; wr <= '1'; -- UART's registers set to read data...
-					addr <= "01"; -- ...on the control register
-					if db_in(3) = '1' then -- ready to send
-						cs <= '0'; rd <= '1'; wr <= '0'; -- UART read input (ie db_out)
-						addr <= "00";
-						state <= endSending;
-					end if;
+					out_stb <= '1';
+					state <= endSending;
 				
 				when endSending =>
-					cs <= '1'; rd <= '1'; wr <= '1'; -- UART return to idle
-					state <= idle;
+					if out_ack = '1' then
+						out_stb <= '0';
+						state <= idle;
+					end if;
 
 				end case;
 			end if;

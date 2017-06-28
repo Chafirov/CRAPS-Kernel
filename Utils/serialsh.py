@@ -5,7 +5,7 @@ import re
 import os
 import struct
 
-s = serial.Serial('/dev/ttyS0', 19200,  parity=serial.PARITY_ODD, timeout=0)
+s = serial.Serial('/dev/ttyS0', 9600,  parity=serial.PARITY_ODD, timeout=0)
 
 
 def parse_obj(f):

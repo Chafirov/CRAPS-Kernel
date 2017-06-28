@@ -22,7 +22,7 @@ int main(int argc, char ** argv){
 	unsigned char writeAddr = atoi(argv[1]); 
 	unsigned char writeData = atoi(argv[2]);
 	
-	if (writeAddr < 15)
+	if (writeAddr < 16)
 		writeByte(writeAddr, writeData, fd);
       	
 

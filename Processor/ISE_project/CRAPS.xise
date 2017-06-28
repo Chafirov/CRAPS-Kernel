@@ -29,7 +29,7 @@
     </file>
     <file xil_pn:name="addsub32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="4"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="40"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="36"/>
     </file>
     <file xil_pn:name="affmux_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="5"/>
@@ -37,7 +37,7 @@
     </file>
     <file xil_pn:name="affmux.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="6"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="39"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="35"/>
     </file>
     <file xil_pn:name="barrelshifter32_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="7"/>
@@ -45,7 +45,7 @@
     </file>
     <file xil_pn:name="barrelshifter32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="8"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="38"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="34"/>
     </file>
     <file xil_pn:name="count2_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="10"/>
@@ -61,7 +61,7 @@
     </file>
     <file xil_pn:name="count4.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="13"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="51"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="45"/>
     </file>
     <file xil_pn:name="count4Z_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="14"/>
@@ -93,7 +93,7 @@
     </file>
     <file xil_pn:name="count24.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="21"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="55"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="50"/>
     </file>
     <file xil_pn:name="dec7segs_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="22"/>
@@ -133,7 +133,7 @@
     </file>
     <file xil_pn:name="decoder6to64.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="31"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="35"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="33"/>
     </file>
     <file xil_pn:name="encodeurpriorite8_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="32"/>
@@ -149,7 +149,7 @@
     </file>
     <file xil_pn:name="encodeurpriorite16.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="35"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="34"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="32"/>
     </file>
     <file xil_pn:name="eq4_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="36"/>
@@ -173,7 +173,7 @@
     </file>
     <file xil_pn:name="eq32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="41"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="33"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="31"/>
     </file>
     <file xil_pn:name="frontMontant_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="42"/>
@@ -181,7 +181,7 @@
     </file>
     <file xil_pn:name="frontMontant.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="43"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="32"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="30"/>
     </file>
     <file xil_pn:name="fulladder.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="44"/>
@@ -193,7 +193,7 @@
     </file>
     <file xil_pn:name="interruptions.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="46"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="49"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="44"/>
     </file>
     <file xil_pn:name="micromachine_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="47"/>
@@ -201,11 +201,11 @@
     </file>
     <file xil_pn:name="micromachine.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="48"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="54"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="49"/>
     </file>
     <file xil_pn:name="Nexys.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="49"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="57"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="52"/>
     </file>
     <file xil_pn:name="pwm_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="50"/>
@@ -217,11 +217,11 @@
     </file>
     <file xil_pn:name="pwm_module.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="52"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="48"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="43"/>
     </file>
     <file xil_pn:name="pwm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="53"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="31"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="29"/>
     </file>
     <file xil_pn:name="ram48k_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="54"/>
@@ -229,19 +229,19 @@
     </file>
     <file xil_pn:name="ram48k.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="55"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="47"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="42"/>
     </file>
     <file xil_pn:name="RamCtrl.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="56"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="53"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="48"/>
     </file>
     <file xil_pn:name="rams_read_through4096x32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="57"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="30"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="28"/>
     </file>
     <file xil_pn:name="rams_read_through8192x32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="58"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="29"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="27"/>
     </file>
     <file xil_pn:name="reg4_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="59"/>
@@ -249,7 +249,7 @@
     </file>
     <file xil_pn:name="reg4.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="60"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="26"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="24"/>
     </file>
     <file xil_pn:name="reg8_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="61"/>
@@ -257,7 +257,7 @@
     </file>
     <file xil_pn:name="reg8.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="62"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="46"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="41"/>
     </file>
     <file xil_pn:name="reg16_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="63"/>
@@ -265,7 +265,7 @@
     </file>
     <file xil_pn:name="reg16.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="64"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="28"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="26"/>
     </file>
     <file xil_pn:name="reg32_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="65"/>
@@ -273,7 +273,7 @@
     </file>
     <file xil_pn:name="reg32.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="66"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="27"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="25"/>
     </file>
     <file xil_pn:name="registres_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="67"/>
@@ -281,11 +281,11 @@
     </file>
     <file xil_pn:name="registres.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="68"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="45"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="40"/>
     </file>
     <file xil_pn:name="Rs232RefComp.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="69"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="44"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="39"/>
     </file>
     <file xil_pn:name="segs7_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="70"/>
@@ -293,7 +293,7 @@
     </file>
     <file xil_pn:name="segs7.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="71"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="43"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="38"/>
     </file>
     <file xil_pn:name="sequencer_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="72"/>
@@ -301,7 +301,7 @@
     </file>
     <file xil_pn:name="sequencer.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="73"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="52"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="47"/>
     </file>
     <file xil_pn:name="shift1.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="74"/>
@@ -329,7 +329,7 @@
     </file>
     <file xil_pn:name="ual.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="80"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="42"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="37"/>
     </file>
     <file xil_pn:name="ucmp4_comm.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="81"/>
@@ -362,33 +362,13 @@
     <file xil_pn:name="Nexys4_Master.ucf" xil_pn:type="FILE_UCF">
       <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
     </file>
-    <file xil_pn:name="clkUnit.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="146"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="37"/>
-    </file>
-    <file xil_pn:name="ctrlUnit.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="147"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="36"/>
-    </file>
-    <file xil_pn:name="diviseurClk_UART.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="148"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="50"/>
-    </file>
-    <file xil_pn:name="UART.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="149"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="41"/>
-    </file>
-    <file xil_pn:name="RxUnit.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="150"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="25"/>
-    </file>
-    <file xil_pn:name="TxUnit.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="151"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="24"/>
-    </file>
     <file xil_pn:name="commUSB.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="145"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="56"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="51"/>
+    </file>
+    <file xil_pn:name="COMM_UART.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="146"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="46"/>
     </file>
   </files>
 

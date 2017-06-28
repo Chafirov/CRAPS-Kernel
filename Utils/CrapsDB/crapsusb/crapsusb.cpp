@@ -49,7 +49,7 @@ int set_interface_attribs (int fd, int speed)
         memset (&tty, 0, sizeof tty);
         if (tcgetattr (fd, &tty) != 0)
         {
-		perror("tcgetattr failed\n");
+                perror("error from tcgetattr");
                 return -1;
         }
 
@@ -59,21 +59,23 @@ int set_interface_attribs (int fd, int speed)
         tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
         // disable IGNBRK for mismatched speed tests; otherwise receive break
         // as \000 chars
-        tty.c_iflag |= INPCK;           // enable input parity check
-        tty.c_iflag |= IGNCR; 
+        tty.c_iflag &= ~IGNBRK;         // disable break processing
         tty.c_lflag = 0;                // no signaling chars, no echo,
                                         // no canonical processing
         tty.c_oflag = 0;                // no remapping, no delays
-        tty.c_cc[VMIN]  = 0;            // read block
-        tty.c_cc[VTIME] = 2;            // 0.5 seconds read timeout
+        tty.c_cc[VMIN]  = 0;            // read doesn't block
+        tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
+
+        tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
 
         tty.c_cflag |= (CLOCAL | CREAD);// ignore modem controls,
                                         // enable reading
-        tty.c_cflag |= PARENB;      // enable parity
+        tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
+        tty.c_cflag &= ~CSTOPB;
 
         if (tcsetattr (fd, TCSANOW, &tty) != 0)
         {
-		perror("tcgetattr failed\n");
+                perror("error from tcsetattr");
                 return -1;
         }
         return 0;
@@ -133,7 +135,7 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_openData(JNIEnv* 
     	return -1;
     }
     
-    set_interface_attribs (fd, B19200);  // set speed to 19,200 bps, 8E1
+    set_interface_attribs (fd, B115200);  // set speed to 19,200 bps, 8E1
     return (jint)fd;
 }
 
@@ -148,9 +150,8 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_closeData(JNIEnv 
 }
 
 void secureWrite(int fd, unsigned char byte){
-	unsigned char reversedByte = reverse(byte);
 
-	write(fd, &reversedByte, 1);
+	write(fd, &byte, 1);
 }
 
 void resend(int fd){
@@ -242,13 +243,11 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_readByte(JNIEnv *
         //read data from the board
         nbRead = read((int)fd, &data, 1);
     }
-   
-    int idata = reverse(data);
 
 #ifdef DEBUG
-    printf("Read %i at addr %i\n", idata, (unsigned char) num);
+    printf("Read %i at addr %i\n", data, (unsigned char) num);
 #endif
  
 	pthread_mutex_unlock(&mutex);
-    return ((jint) idata);
+    return ((jint) data);
 }
