@@ -10,13 +10,13 @@ entity Nexys is
 		mclk : in std_logic ;
 		btn : in std_logic_vector (3 downto 0) ;
 		sw : in std_logic_vector (7 downto 0) ;
-		ld : out std_logic_vector (8 downto 0) ;
+		ld : out std_logic_vector (9 downto 0) ;
 		ssg : out std_logic_vector (6 downto 0) ;
 		an : out std_logic_vector (3 downto 0) ;
 --------------------------------------------------------------------------
 -------- Pins used for shell communications (=> Pmods) -------------------
-		ja1 : inout std_logic ; -- rxd
-		ja2 : inout std_logic ; -- txd
+		ja1 : in std_logic ; -- rxd
+		ja2 : out std_logic ; -- txd
 ---------------------------------------------------------------------------
 -------- Pins used for Craps Debuger (=> USB)------------------------------
 		rxd : in std_logic;
@@ -217,11 +217,13 @@ end component;
 	signal ram_read : std_logic ;
 	signal ram_write : std_logic ;
 	signal ram_write_data : std_logic_vector (31 downto 0) ;
-
 begin
 
 	-- concurrent statements
+	
+	
 	ld(8) <= rst;
+	ld(9) <= ja1;
 	rst <= not btn(0);
 	irq <= (pwm_out) or (btn(3)) ;
 	clk <= clock(1) ;

@@ -53,7 +53,7 @@ public class UserInterface {
             }
 
             if (cmd.isEmpty()) {
-                //cmd = lastCmd;
+                cmd = lastCmd;
             }
 
             if (!cmd.isEmpty()) {

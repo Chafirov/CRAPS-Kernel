@@ -24,16 +24,16 @@ See [this screencast](https://asciinema.org/a/17322) for an example of a shell
 session.
 
 ## How to
-### The processor
+### The processor ([See here for more details](Processor/README.md))
 The processor is a CRAPS processor, a RISC processor.
 
 The [processor](Processor/ISE_project/) is written in VHDL.
- You can then use Digilent Adept or Xilinx ISE to program the FPGA.
+You can then use Digilent Adept or Xilinx ISE to program the FPGA.
 
 The processor runs CRAPS assembly. You can use [`crapsc`](Utils/crapsc) to
 compile CRAPS assembly to CRAPS bytecode.
 
-### The kernel
+### The kernel ([See here for more details](Utils/README.md))
 The kernel is written in *moc*, a C-like language. We provide a
 [compiler](https://github.com/arthaud/moc) to compile it to CRAPS assembly.
 

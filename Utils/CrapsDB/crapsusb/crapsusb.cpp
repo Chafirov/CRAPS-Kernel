@@ -5,6 +5,7 @@
 #include <cstring>
 
 
+#include <dirent.h> 
 #include <errno.h>
 #include <fcntl.h> 
 #include <string.h>
@@ -96,7 +97,7 @@ JNIEXPORT jint JNICALL Java_org_mmek_craps_crapsusb_CommThread_init(JNIEnv *, jc
  * Signature: ()Ljava/util/List;
  */
 JNIEXPORT jobject JNICALL Java_org_mmek_craps_crapsusb_CommThread_getDeviceAliases(JNIEnv* env, jclass) {
-    jclass arrayList = env->FindClass("java/util/ArrayList");
+	jclass arrayList = env->FindClass("java/util/ArrayList");
     if(arrayList == NULL) return NULL;
 
     jmethodID arrayListInit = env->GetMethodID(arrayList, "<init>", "()V");
@@ -108,12 +109,34 @@ JNIEXPORT jobject JNICALL Java_org_mmek_craps_crapsusb_CommThread_getDeviceAlias
     jmethodID arrayListAdd = env->GetMethodID(arrayList, "add", "(Ljava/lang/Object;)Z");
     if(arrayListAdd == NULL) return NULL;
 
-    jstring jalias = env->NewStringUTF("/dev/ttyUSB1");
-    if(jalias == NULL) return NULL;
-    
-    jboolean jbool = env->CallBooleanMethod(result, arrayListAdd, jalias);
-    if(!jbool) return NULL;
 
+	DIR           *d;
+	struct dirent *dir;
+
+	d = opendir("/dev");
+
+	if (d)
+	{
+	  while ((dir = readdir(d)) != NULL)
+	  {
+		if(strncmp(dir->d_name, "ttyUSB", 6) == 0){
+			char fileName[50] = "/dev/";	
+			strncat(fileName, dir->d_name, 20);
+
+			jstring jalias = env->NewStringUTF(fileName);
+			if(jalias == NULL) return NULL;
+		    
+			jboolean jbool = env->CallBooleanMethod(result, arrayListAdd, jalias);
+			if(!jbool) return NULL;
+
+		}
+	  }
+
+	  closedir(d);
+	}
+
+
+    
     return result;
 }
 

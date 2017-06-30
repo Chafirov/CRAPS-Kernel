@@ -18,13 +18,13 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Rs232RefComp is
     port (
-        TXD     : out   std_logic;
+        TXD     : out   std_logic                      := '1';
         RXD     : in    std_logic;
         CLK     : in    std_logic;                             -- Master Clock = 50MHz
         DBIN    : in    std_logic_vector (7 downto 0);         -- Data Bus in
         DBOUT   : out   std_logic_vector (7 downto 0);         -- Data Bus out
-        RDA     : inout std_logic;                             -- Read Data Available
-        TBE     : inout std_logic                      := '1'; -- Transfer Bus Empty
+        RDA     : inout	std_logic;                             -- Read Data Available
+        TBE     : inout	std_logic                      := '1'; -- Transfer Bus Empty
         RD      : in    std_logic;                             -- Read Strobe
         WR      : in    std_logic;                             -- Write Strobe
         PE      : out   std_logic;                             -- Parity Error Flag

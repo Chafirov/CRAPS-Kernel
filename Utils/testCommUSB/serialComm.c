@@ -62,7 +62,7 @@ int set_interface_attribs (int fd, int speed)
 
         tty.c_cflag |= (CLOCAL | CREAD);// ignore modem controls,
                                         // enable reading
-        tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
+        tty.c_cflag |= PARODD;      // shut off parity
         tty.c_cflag &= ~CSTOPB;
 
         if (tcsetattr (fd, TCSANOW, &tty) != 0)
@@ -82,7 +82,7 @@ int initSerialComm(char* portname){
 		return -1;
 	}
 	
-	set_interface_attribs (fd, B115200);  // set speed to 19,200 bps, 8E1
+	set_interface_attribs (fd, B19200);  // set speed to 19,200 bps, 8E1
 	return fd;
 }
 
