@@ -1,6 +1,6 @@
 # Processor
 ## About 
-This processor is a CRAPS processor : a simplified version of the Sun SPARC processor.
+This processor is a CRAPS processor : a simplified version of the Sun's SPARC processor.
 You can find a complete description of the CRAPS [here](doc/craps.pdf).
 [Here](ISE_project) is a VHDL implementation of the CRAPS written for a Digilent Nexys4 board.
 

@@ -173,6 +173,7 @@ end component;
 	signal flashrp : std_logic ;
 	signal flashststs : std_logic;
 	--------------------------------
+	signal nja2 : std_logic; -- not ja2
 	signal rst : std_logic ;
 	signal irq : std_logic ;
 	signal pwm_out : std_logic ;
@@ -221,7 +222,7 @@ begin
 
 	-- concurrent statements
 	
-	
+	ja2 <= not nja2;
 	ld(8) <= rst;
 	ld(9) <= ja1;
 	rst <= not btn(0);
@@ -256,7 +257,7 @@ begin
 	count24_0 : count24 port map (rst, mclk, '1', clock(23 downto 0), ripple) ;
 	commUSB_1 : commUSB port map (mclk, not rst, rxd, txd, xpc2board(127 downto 0), board2pc(127 downto 0)) ;
 	sequencer_2 : sequencer port map (rst, clk, mon_req, mon_cmd(3 downto 0), monitor(37 downto 0), break, run, ir(31 downto 0), n, z, v, c, curr_int(3 downto 0), waiting_int(3 downto 0), global_read_done, global_write_done, write, oe_num(1 downto 0), areg(4 downto 0), breg(4 downto 0), dreg(4 downto 0), cmd_ual(5 downto 0), soft_int, handle_int, state(5 downto 0), mon_ack) ;
-	micromachine_3 : micromachine port map (rst, clk, mclk, areg(4 downto 0), breg(4 downto 0), dreg(4 downto 0), cmd_ual(5 downto 0), oe_num(1 downto 0), write, soft_int, handle_int, monitor(31 downto 0), btn(3 downto 1), sw(7 downto 0), swclk, ssgclk, pwmclk, ja1, ram_read_data(31 downto 0), ram_read_done, ram_write_done, dbus(31 downto 0), n, z, v, c, ir(31 downto 0), break, curr_int(3 downto 0), waiting_int(3 downto 0), ld(7 downto 0), ssg(6 downto 0), an(3 downto 0), pwm_out, ja2, ram_addr(21 downto 0), ram_read, ram_write, ram_write_data(31 downto 0), global_read_done, global_write_done) ;
+	micromachine_3 : micromachine port map (rst, clk, mclk, areg(4 downto 0), breg(4 downto 0), dreg(4 downto 0), cmd_ual(5 downto 0), oe_num(1 downto 0), write, soft_int, handle_int, monitor(31 downto 0), btn(3 downto 1), sw(7 downto 0), swclk, ssgclk, pwmclk, not ja1, ram_read_data(31 downto 0), ram_read_done, ram_write_done, dbus(31 downto 0), n, z, v, c, ir(31 downto 0), break, curr_int(3 downto 0), waiting_int(3 downto 0), ld(7 downto 0), ssg(6 downto 0), an(3 downto 0), pwm_out, nja2, ram_addr(21 downto 0), ram_read, ram_write, ram_write_data(31 downto 0), global_read_done, global_write_done) ;
 	RamCtrl_4 : RamCtrl port map (rst, clk, ram_addr(21 downto 0), ram_read, ram_read_data(31 downto 0), ram_read_done, ram_write, ram_write_data(31 downto 0), ram_write_done, memdb(15 downto 0), memadr(22 downto 0), ramcs, flashcs, memwr, memoe, ramub, ramlb, ramcre, ramadv, ramclk, ramwait, flashrp, flashststs) ;
 
 end synthesis;
