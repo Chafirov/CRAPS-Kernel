@@ -140,7 +140,7 @@ begin
 							state <= idle;
 						else
 							cmpt_frame := 0;
-							state <= send_ack;
+							state <= idle;
 						end if;
 					end if;
 					

@@ -206,28 +206,28 @@ void writeByteC(unsigned char addr, unsigned char byte, int fd){
     	printf("%i wrote at addr %i\n", byte, addr);
 	#endif
     
-    	sendedBytes[2*cmpt_frame] = addr;
-	sendedBytes[2*cmpt_frame + 1] = byte;
-	cmpt_frame ++;
-
-	if (cmpt_frame == 6){
-		unsigned char ctrl;
-		int rd = 0;
-		int i_ms = 0;
-		while (rd == 0 && i_ms < 100){
-			i_ms ++;
-			rd = read(fd, &ctrl, 1);
-			usleep(ONE_MS);
-		}
-		if (rd == 0 || ctrl != 255)
-			resend(fd);
-		#ifdef DEBUG
-		else {
-			printf("Ack : OK\n");
-		}
-		#endif
-		cmpt_frame = 0;
-	}
+//    	sendedBytes[2*cmpt_frame] = addr;
+//	sendedBytes[2*cmpt_frame + 1] = byte;
+//	cmpt_frame ++;
+//
+//	if (cmpt_frame == 6){
+//		unsigned char ctrl;
+//		int rd = 0;
+//		int i_ms = 0;
+//		while (rd == 0 && i_ms < 100){
+//			i_ms ++;
+//			rd = read(fd, &ctrl, 1);
+//			usleep(ONE_MS);
+//		}
+//		if (rd == 0 || ctrl != 255)
+//			resend(fd);
+//		#ifdef DEBUG
+//		else {
+//			printf("Ack : OK\n");
+//		}
+//		#endif
+//		cmpt_frame = 0;
+//	}
 	pthread_mutex_unlock(&mutex);
 }
 
